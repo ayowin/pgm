@@ -166,12 +166,20 @@ bool Pgm::parseFromFile(const std::string & filename)
 	int lineIndex = 0;
 	while (std::getline(file, line))
 	{
+		// 如果该行以#开头，则认为该行属于注释，不应该被加载，不进行解析
+		if(line.at(0) == '#')
+		{
+			continue;
+		}
+
 		lineIndex++;
+
 		// 解决换行符为\r\n时，getline残留的\r问题，统一移除掉
 		if (line.at(line.length() - 1) == '\r')
 		{
 			line = line.substr(0, line.length() - 1);
 		}
+
 		switch (lineIndex)
 		{
 		case 1://解析第一行：pgm版本
@@ -186,11 +194,12 @@ bool Pgm::parseFromFile(const std::string & filename)
 			break;
 		case 2://解析第二行：pgm图片宽度、高度
 		{
-			// 移除行末的空格，再做正则表达式匹配
-			while (line.at(line.length() - 1) == ' ')
-			{
-				line = line.substr(0, line.length() - 1);
-			}
+            // 移除行末的空格，再做正则表达式匹配
+            while (line.at(line.length() - 1) == ' ')
+            {
+                line = line.substr(0, line.length() - 1);
+            }
+            // 正则表达式匹配
 			std::regex regularExpression("^[0-9]* [0-9]*$");
 			std::smatch lineMatch;
 			if (std::regex_match(line, lineMatch, regularExpression))
