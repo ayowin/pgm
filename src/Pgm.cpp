@@ -194,12 +194,12 @@ bool Pgm::parseFromFile(const std::string & filename)
 			break;
 		case 2://解析第二行：pgm图片宽度、高度
 		{
-            // 移除行末的空格，再做正则表达式匹配
-            while (line.at(line.length() - 1) == ' ')
-            {
-                line = line.substr(0, line.length() - 1);
-            }
-            // 正则表达式匹配
+			// 移除行末的空格，再做正则表达式匹配
+			while (line.at(line.length() - 1) == ' ')
+			{
+				line = line.substr(0, line.length() - 1);
+			}
+			// 正则表达式匹配
 			std::regex regularExpression("^[0-9]* [0-9]*$");
 			std::smatch lineMatch;
 			if (std::regex_match(line, lineMatch, regularExpression))
